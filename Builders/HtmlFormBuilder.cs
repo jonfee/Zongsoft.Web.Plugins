@@ -1,0 +1,100 @@
+﻿/*
+ * Authors:
+ *   钟峰(Popeye Zhong) <zongsoft@gmail.com>
+ *
+ * Copyright (C) 2011-2013 Zongsoft Corporation <http://www.zongsoft.com>
+ *
+ * This file is part of Zongsoft.Web.Plugins.
+ *
+ * Zongsoft.Web.Plugins is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * Zongsoft.Web.Plugins is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with Zongsoft.Web.Plugins; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
+using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web.UI;
+
+using Zongsoft.Plugins;
+using Zongsoft.Plugins.Builders;
+
+namespace Zongsoft.Web.Plugins.Builders
+{
+	[Zongsoft.Plugins.Builders.BuilderBehaviour(ValueType = typeof(HtmlForm))]
+	public class HtmlFormBuilder : ControlBuilder
+	{
+		#region 重写方法
+		public override object Build(BuilderContext context)
+		{
+			return new HtmlForm()
+			{
+				Action = context.Builtin.Properties.GetValue<string>("action"),
+				Method = context.Builtin.Properties.GetValue<string>("method"),
+			};
+		}
+		#endregion
+
+		#region 嵌套子类
+		public class HtmlForm : Zongsoft.Web.Controls.DataBoundControl
+		{
+			#region 公共属性
+			[Bindable(true)]
+			public string Action
+			{
+				get
+				{
+					return this.GetAttributeValue("Action", string.Empty);
+				}
+				set
+				{
+					this.SetAttributeValue(() => this.Action, value);
+				}
+			}
+
+			[Bindable(true)]
+			[DefaultValue("POST")]
+			public string Method
+			{
+				get
+				{
+					return this.GetAttributeValue("Method", "POST");
+				}
+				set
+				{
+					this.SetAttributeValue(() => this.Method, value);
+				}
+			}
+			#endregion
+
+			#region 重写方法
+			public override void RenderControl(System.Web.UI.HtmlTextWriter writer)
+			{
+				writer.AddAttribute(HtmlTextWriterAttribute.Name, this.ID);
+				this.RenderAttributes(writer);
+				writer.RenderBeginTag(HtmlTextWriterTag.Form);
+
+				this.RenderChildren(writer);
+
+				writer.RenderEndTag();
+			}
+			#endregion
+		}
+		#endregion
+	}
+}

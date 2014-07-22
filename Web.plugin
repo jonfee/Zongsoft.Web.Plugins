@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<plugin name="Web"
+        title="Web Plugin"
+        author="Popeye Zhong(zongsoft@gmail.com)"
+        version="3.1.1310.0"
+        copyright="Copyright (C) 2010-2013 Zongsoft Corporation. All rights reserved."
+        description="Created Date: 2012-9-20 by Popeye Zhong, Modified Date: 2013-10">
+
+	<manifest>
+		<dependencies>
+			<dependency name="Main"/>
+		</dependencies>
+	</manifest>
+
+	<builders>
+		<!-- Web 路由 -->
+		<builder name="route" type="Zongsoft.Web.Plugins.Builders.RouteBuilder, Zongsoft.Web.Plugins" />
+		<builder name="ignore" type="Zongsoft.Web.Plugins.Builders.RouteIgnoreBuilder, Zongsoft.Web.Plugins" />
+
+		<!-- Web 控件-->
+		<builder name="form" type="Zongsoft.Web.Plugins.Builders.HtmlFormBuilder, Zongsoft.Web.Plugins" />
+		<builder name="control" type="Zongsoft.Web.Plugins.Builders.UserControlBuilder, Zongsoft.Web.Plugins" />
+		<builder name="sitemap" type="Zongsoft.Web.Plugins.Builders.SitemapBuilder, Zongsoft.Web.Plugins" />
+		<builder name="menu" type="Zongsoft.Web.Plugins.Builders.TreeViewBuilder, Zongsoft.Web.Plugins" />
+		<builder name="menuItem" type="Zongsoft.Web.Plugins.Builders.TreeViewNodeBuilder, Zongsoft.Web.Plugins" />
+		<builder name="tree" type="Zongsoft.Web.Plugins.Builders.TreeViewBuilder, Zongsoft.Web.Plugins" />
+		<builder name="node" type="Zongsoft.Web.Plugins.Builders.TreeViewNodeBuilder, Zongsoft.Web.Plugins" />
+	</builders>
+
+	<!-- 路由定义 -->
+	<extension path="/Workbench/Routes">
+		<ignore name="axd"
+		        url="{resource}.axd/{*pathInfo}" />
+
+		<route name="PluginExplorer"
+		       url="PluginExplorer/{action}"
+		       defaults="controller=PluginExplorer" />
+
+		<route name="Default"
+		       url="{controller}/{action}/{id}"
+		       defaults="controller=Home, action=Index, id=" />
+	</extension>
+
+	<!-- 挂载默认控制器 -->
+	<extension path="/Workspace/Controllers">
+		<!-- 以下是插件管理器的控制器 -->
+		<object name="PluginExplorer" type="Zongsoft.Web.Plugins.Mvc.PluginExplorerController, Zongsoft.Web.Plugins" />
+
+		<!-- 以下是添加的一个测试控制器，在实际部署中请换成真实的业务控制器 -->
+		<object name="Home" type="Zongsoft.Web.Launcher.DefaultController, Zongsoft.Web.Launcher" />
+	</extension>
+
+	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
+	<extension path="/Workbench">
+		<menu name="MainMenu" cssClass="menu" place="HeaderPlaceHolder.MenubarPlaceHolder" />
+		<tree name="Navigator" cssClass="navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
+		<sitemap name="Sitemap" cssClass="sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
+
+		<form name="form" action="${Request.Path}" method="post" place="HeaderPlaceHolder.ExpressPlaceHolder">
+			<control name="__theme__" type="Zongsoft.Web.Controls.ComboBox, Zongsoft.Web" AutoSubmit="True" DataSource="${Items[__themes__]}" SelectedValue="${Items[__theme__]}" CssClass="themes" />
+		</form>
+	</extension>
+
+	<!-- 在主菜单中添加首页菜单项 -->
+	<extension path="/Workbench/MainMenu">
+		<menuItem name="Home" text="系统首页" url="/Home/Index" />
+	</extension>
+
+	<!-- 在站点映射中添加首页项 -->
+	<extension path="/Workbench/Sitemap">
+		<node name="Home" text="系统首页" url="/Home" />
+	</extension>
+</plugin>
