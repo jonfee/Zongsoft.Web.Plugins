@@ -36,6 +36,10 @@
 		       url="PluginExplorer/{action}"
 		       defaults="controller=PluginExplorer" />
 
+		<route name="Api"
+		       url="api/{controller}/{id}"
+		       defaults="id=" />
+
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
 		       defaults="controller=Home, action=Index, id=" />
