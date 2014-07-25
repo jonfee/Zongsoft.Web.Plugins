@@ -68,8 +68,11 @@ namespace Zongsoft.Web.Plugins.Http
 				area = VirtualPathUtility.GetArea(routeData.Route.RouteTemplate);
 
 			string controllerPath = Zongsoft.Plugins.PluginPath.Combine(string.IsNullOrEmpty((string)area) ? "Workbench" : (string)area, "Controllers", (string)routeData.Values["controller"]);
-
 			var node = _pluginContext.PluginTree.Find(controllerPath);
+
+			if(node == null)
+				return null;
+
 			return new PluginHttpControllerDescriptor(request.GetConfiguration(), node);
 		}
 		#endregion
