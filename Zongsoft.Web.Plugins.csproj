@@ -87,11 +87,12 @@
     <Compile Include="Builders\TreeViewBuilder.cs" />
     <Compile Include="Builders\TreeViewNodeBuilder.cs" />
     <Compile Include="Builders\UserControlBuilder.cs" />
+    <Compile Include="Http\CollectionExtension.cs" />
+    <Compile Include="Http\HttpControllerActionSelector.cs" />
     <Compile Include="Http\PluginHttpControllerDescriptor.cs" />
     <Compile Include="Http\PluginHttpControllerSelector.cs" />
     <Compile Include="Mvc\PluginControllerFactory.cs" />
     <Compile Include="Mvc\PluginExplorerController.cs" />
-    <Compile Include="Http\PluginHttpControllerActivator.cs" />
     <Compile Include="Mvc\PluginFilterProvider.cs" />
     <Compile Include="Mvc\PluginViewEngine.cs" />
     <Compile Include="Mvc\PluginWebFormView.cs" />

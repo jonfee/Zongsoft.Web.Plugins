@@ -37,9 +37,9 @@ namespace Zongsoft.Web.Plugins
 		#region 构造函数
 		internal Workbench(ApplicationContext applicationContext) : base(applicationContext)
 		{
-			this.ViewEngines.Clear();
-
-			this.ViewEngines.Add(new Zongsoft.Web.Plugins.Mvc.PluginWebFormViewEngine(this.PluginContext));
+			//添加插件视图引擎到视图引擎集合中
+			this.ViewEngines.Insert(0, new Zongsoft.Web.Plugins.Mvc.PluginWebFormViewEngine(this.PluginContext));
+			//替换系统默认控制器工厂
 			this.ControllerFactory = new Zongsoft.Web.Plugins.Mvc.PluginControllerFactory(this.PluginContext);
 		}
 		#endregion
@@ -75,10 +75,11 @@ namespace Zongsoft.Web.Plugins
 			//初始化MVC的环境
 			System.Web.Mvc.FilterProviders.Providers.Add(new Zongsoft.Web.Plugins.Mvc.PluginFilterProvider(this.PluginContext));
 
-			//初始化WebAPI的环境
+			//替换系统默认的服务
 			System.Web.Http.GlobalConfiguration.Configuration.Services.Replace(typeof(System.Web.Http.Dispatcher.IHttpControllerSelector), new Http.PluginHttpControllerSelector(this.PluginContext));
-			//System.Web.Http.GlobalConfiguration.Configuration.Services.Replace(typeof(System.Web.Http.Dispatcher.IHttpControllerActivator), new Http.PluginHttpControllerActivator());
+			System.Web.Http.GlobalConfiguration.Configuration.Services.Replace(typeof(System.Web.Http.Controllers.IHttpActionSelector), new Http.HttpControllerActionSelector());
 
+			//更改序列化器的默认设置
 			System.Web.Http.GlobalConfiguration.Configuration.Formatters.XmlFormatter.UseXmlSerializer = true;
 			var contractResolver = System.Web.Http.GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver as Newtonsoft.Json.Serialization.DefaultContractResolver;
 			if(contractResolver != null)

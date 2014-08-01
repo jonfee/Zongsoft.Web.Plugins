@@ -37,8 +37,8 @@
 		       defaults="controller=PluginExplorer" />
 
 		<route name="Api"
-		       url="api/{controller}/{id}"
-		       defaults="id=" />
+		       url="api/{controller}/{id}/{action}"
+		       defaults="id=, action=" />
 
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
