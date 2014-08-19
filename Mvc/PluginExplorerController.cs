@@ -13,7 +13,7 @@
  *
  * Zongsoft.Web.Plugins is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * The above copyright notice and this permission notice shall be
@@ -25,6 +25,7 @@
  */
 
 using System;
+using System.IO;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,55 @@ namespace Zongsoft.Web.Plugins.Mvc
 			}
 
 			return this.View(node);
+		}
+
+		public JsonResult Find(string path)
+		{
+			if(string.IsNullOrWhiteSpace(path))
+				return null;
+
+			var result = _pluginContext.ResolvePath(path);
+			return new JsonResult(result);
+		}
+		#endregion
+
+		#region 嵌套子类
+		public class JsonResult : ActionResult
+		{
+			#region 成员字段
+			private object _data;
+			#endregion
+
+			#region 构造函数
+			public JsonResult(object data)
+			{
+				if(data == null)
+					throw new ArgumentNullException("data");
+
+				_data = data;
+			}
+			#endregion
+
+			#region 重写方法
+			public override void ExecuteResult(ControllerContext context)
+			{
+				var response = context.HttpContext.Response;
+
+				response.ContentType = "application/json";
+				response.ContentEncoding = Encoding.UTF8;
+
+				using(var stream = new MemoryStream())
+				{
+					Zongsoft.Runtime.Serialization.Serializer.Json.Serialize(stream, _data);
+					stream.Position = 0;
+
+					using(var reader = new StreamReader(stream))
+					{
+						response.Write(reader.ReadToEnd());
+					}
+				}
+			}
+			#endregion
 		}
 		#endregion
 	}
