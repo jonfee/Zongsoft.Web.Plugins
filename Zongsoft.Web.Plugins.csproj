@@ -65,15 +65,15 @@
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="Zongsoft.CoreLibrary">
-      <HintPath>..\Zongsoft.CoreLibrary\bin\Debug\Zongsoft.CoreLibrary.dll</HintPath>
+      <HintPath>..\Zongsoft.CoreLibrary\bin\$(Configuration)\Zongsoft.CoreLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Zongsoft.Plugins">
-      <HintPath>..\Zongsoft.Plugins\bin\Debug\Zongsoft.Plugins.dll</HintPath>
+      <HintPath>..\Zongsoft.Plugins\bin\$(Configuration)\Zongsoft.Plugins.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Zongsoft.Web">
-      <HintPath>..\Zongsoft.Web\bin\Debug\Zongsoft.Web.dll</HintPath>
+      <HintPath>..\Zongsoft.Web\bin\$(Configuration)\Zongsoft.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
