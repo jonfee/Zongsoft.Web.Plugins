@@ -39,12 +39,18 @@ namespace Zongsoft.Web.Plugins
 		{
 			//添加插件视图引擎到视图引擎集合中
 			this.ViewEngines.Insert(0, new Zongsoft.Web.Plugins.Mvc.PluginWebFormViewEngine(this.PluginContext));
-			//替换系统默认控制器工厂
+
+			//替换系统默认的控制器工厂
 			this.ControllerFactory = new Zongsoft.Web.Plugins.Mvc.PluginControllerFactory(this.PluginContext);
+			//替换系统默认的虚拟路径提供者
+			this.VirtualPathProvider = new Zongsoft.Web.Plugins.Hosting.PluginVirtualPathProvider(this.PluginContext);
 		}
 		#endregion
 
 		#region 公共属性
+		/// <summary>
+		/// 获取或设置当前应用的<see cref="IControllerFactory"/>控制器工厂对象。
+		/// </summary>
 		public IControllerFactory ControllerFactory
 		{
 			get
@@ -60,11 +66,32 @@ namespace Zongsoft.Web.Plugins
 			}
 		}
 
+		/// <summary>
+		/// 获取当前应用的<see cref="ViewEngineCollection"/>视图引擎集合。
+		/// </summary>
 		public ViewEngineCollection ViewEngines
 		{
 			get
 			{
 				return System.Web.Mvc.ViewEngines.Engines;
+			}
+		}
+
+		/// <summary>
+		/// 获取或设置当前应用的<see cref="System.Web.Hosting.VirtualPathProvider"/>虚拟路径提供者。
+		/// </summary>
+		public System.Web.Hosting.VirtualPathProvider VirtualPathProvider
+		{
+			get
+			{
+				return System.Web.Hosting.HostingEnvironment.VirtualPathProvider;
+			}
+			set
+			{
+				if(value == null)
+					throw new ArgumentNullException();
+
+				System.Web.Hosting.HostingEnvironment.RegisterVirtualPathProvider(value);
 			}
 		}
 		#endregion
