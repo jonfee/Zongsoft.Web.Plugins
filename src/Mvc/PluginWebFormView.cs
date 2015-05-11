@@ -156,10 +156,11 @@ namespace Zongsoft.Web.Plugins.Mvc
 			string areaName = context.RouteData.DataTokens["area"] as string;
 
 			//生成主题相关的内容
-			Zongsoft.Web.Themes.ThemeUtility.GenerateTheme(page);
-
-			page.Items["__themes__"] = Zongsoft.Web.Themes.ThemeUtility.GetThemeNames(page);
-			page.Items["__theme__"] = Zongsoft.Web.Themes.ThemeUtility.GetCurrentThemeName(page);
+			if(Zongsoft.Web.Themes.ThemeUtility.GenerateTheme(page))
+			{
+				page.Items["__themes__"] = Zongsoft.Web.Themes.ThemeUtility.GetThemeNames(page);
+				page.Items["__theme__"] = Zongsoft.Web.Themes.ThemeUtility.GetCurrentThemeName(page);
+			}
 
 			//首先生成工作台节点下的基本控件
 			this.GeneratePageContent(page, _pluginContext.PluginTree.Find(_pluginContext.Settings.WorkbenchPath));
