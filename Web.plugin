@@ -57,6 +57,7 @@
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
 	<extension path="/Workbench">
 		<menu name="MainMenu" cssClass="menu" place="HeaderPlaceHolder.MenubarPlaceHolder" />
+		<menu name="Express" cssClass="express" place="HeaderPlaceHolder.ExpressPlaceHolder" />
 		<tree name="Navigator" cssClass="navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
 		<sitemap name="Sitemap" cssClass="sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
 
