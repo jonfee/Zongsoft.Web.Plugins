@@ -2,7 +2,7 @@
  * Authors:
  *   钟峰(Popeye Zhong) <zongsoft@gmail.com>
  *
- * Copyright (C) 2011-2013 Zongsoft Corporation <http://www.zongsoft.com>
+ * Copyright (C) 2011-2015 Zongsoft Corporation <http://www.zongsoft.com>
  *
  * This file is part of Zongsoft.Web.Plugins.
  *
@@ -244,11 +244,9 @@ namespace Zongsoft.Web.Plugins.Mvc
 
 			//查找当前控制器位于插件树中的节点
 			var node = _pluginContext.PluginTree.Find((string)nodePath);
-			if(node == null || node.Plugin == null)
-				return string.Empty;
 
 			//获取当前插件对应的视图位置
-			IEnumerable<string> locations = this.GetSearchLocations(node.Plugin, controllerName, name, extensions);
+			IEnumerable<string> locations = this.GetSearchLocations((node == null ? null : node.Plugin), controllerName, name, extensions);
 
 			foreach(string location in locations)
 			{
@@ -267,9 +265,6 @@ namespace Zongsoft.Web.Plugins.Mvc
 
 		private IEnumerable<string> GetSearchLocations(Plugin plugin, string controllerName, string name, IEnumerable<string> extensions)
 		{
-			if(plugin == null)
-				return new string[0];
-
 			string directoryName;
 			List<string> locations = new List<string>();
 
