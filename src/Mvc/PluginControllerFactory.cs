@@ -2,7 +2,7 @@
  * Authors:
  *   钟峰(Popeye Zhong) <zongsoft@gmail.com>
  *
- * Copyright (C) 2011-2013 Zongsoft Corporation <http://www.zongsoft.com>
+ * Copyright (C) 2011-2015 Zongsoft Corporation <http://www.zongsoft.com>
  *
  * This file is part of Zongsoft.Web.Plugins.
  *
@@ -61,7 +61,12 @@ namespace Zongsoft.Web.Plugins.Mvc
 			if(node == null || node.NodeType == PluginTreeNodeType.Empty)
 				return null;
 
-			return node.UnwrapValue<IController>(ObtainMode.Alway, this, null);
+			var value = node.UnwrapValue(ObtainMode.Alway, this);
+
+			if(value != null && typeof(Delegate).IsAssignableFrom(value.GetType()))
+				value = ((Delegate)value).DynamicInvoke();
+
+			return value as IController;
 		}
 
 		public void ReleaseController(IController controller)
