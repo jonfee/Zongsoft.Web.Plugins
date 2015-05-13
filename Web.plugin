@@ -49,9 +49,6 @@
 	<extension path="/Workspace/Controllers">
 		<!-- 以下是插件管理器的控制器 -->
 		<object name="PluginExplorer" type="Zongsoft.Web.Plugins.Mvc.PluginExplorerController, Zongsoft.Web.Plugins" />
-
-		<!-- 以下是添加的一个测试控制器，在实际部署中请换成真实的业务控制器 -->
-		<object name="Home" type="Zongsoft.Web.Launcher.DefaultController, Zongsoft.Web.Launcher" />
 	</extension>
 
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
@@ -68,11 +65,11 @@
 
 	<!-- 在主菜单中添加首页菜单项 -->
 	<extension path="/Workbench/MainMenu">
-		<menuItem name="Home" text="系统首页" url="/Home/Index" />
+		<menuItem name="Home" text="首页" url="/Home/Index" />
 	</extension>
 
 	<!-- 在站点映射中添加首页项 -->
 	<extension path="/Workbench/Sitemap">
-		<node name="Home" text="系统首页" url="/Home" />
+		<node name="Home" text="首页" url="/Home" />
 	</extension>
 </plugin>
