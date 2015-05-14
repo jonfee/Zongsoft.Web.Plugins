@@ -58,7 +58,7 @@
 		<tree name="Navigator" cssClass="navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
 		<sitemap name="Sitemap" cssClass="sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
 
-		<form name="form" action="${Request.Path}" method="post" place="HeaderPlaceHolder.ExpressPlaceHolder">
+		<form name="__ThemeForm__" action="${Request.Path}" method="GET" place="HeaderPlaceHolder.ExpressPlaceHolder">
 			<control name="__theme__" type="Zongsoft.Web.Controls.ComboBox, Zongsoft.Web" AutoSubmit="True" DataSource="${Items[__themes__]}" SelectedValue="${Items[__theme__]}" CssClass="themes" />
 		</form>
 	</extension>
