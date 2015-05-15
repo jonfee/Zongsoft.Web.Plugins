@@ -42,6 +42,11 @@
 
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
+		       constraints="action=[A-Za-z_]+\w*"
+		       defaults="controller=Home, action=Index, id=" />
+
+		<route name="DefaultReversed"
+		       url="{controller}/{id}/{action}"
 		       defaults="controller=Home, action=Index, id=" />
 	</extension>
 
