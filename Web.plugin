@@ -70,11 +70,11 @@
 
 	<!-- 在主菜单中添加首页菜单项 -->
 	<extension path="/Workbench/MainMenu">
-		<menuItem name="Home" text="首页" url="/Home/Index" />
+		<menuItem name="Home" text="{res:Text.HomePage}" url="/Home/Index" />
 	</extension>
 
 	<!-- 在站点映射中添加首页项 -->
 	<extension path="/Workbench/Sitemap">
-		<node name="Home" text="首页" url="/Home" />
+		<node name="Home" text="{res:Text:HomePage}" url="/Home" />
 	</extension>
 </plugin>

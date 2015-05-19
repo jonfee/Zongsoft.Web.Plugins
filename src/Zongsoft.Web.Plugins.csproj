@@ -107,7 +107,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Mvc\Views\PluginExplorer.Index.aspx">
       <SubType>ASPXCodeBehind</SubType>
