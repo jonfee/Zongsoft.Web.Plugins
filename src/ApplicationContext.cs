@@ -58,7 +58,7 @@ namespace Zongsoft.Web.Plugins
 			}
 		}
 
-		public override System.Security.Principal.IPrincipal User
+		public override System.Security.Principal.IPrincipal Principal
 		{
 			get
 			{
