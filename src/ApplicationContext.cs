@@ -49,6 +49,19 @@ namespace Zongsoft.Web.Plugins
 		}
 		#endregion
 
+		#region 公共属性
+		/// <summary>
+		/// 获取当前Web应用程序的上下文对象。
+		/// </summary>
+		public HttpContext HttpContext
+		{
+			get
+			{
+				return HttpContext.Current;
+			}
+		}
+		#endregion
+
 		#region 重写方法
 		public override string ApplicationDirectory
 		{
