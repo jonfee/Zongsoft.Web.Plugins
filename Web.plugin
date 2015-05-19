@@ -46,7 +46,7 @@
 
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
-		       constraints="action=[A-Za-z_]+\w*"
+		       constraints="action=^[A-Za-z_]+(?:-\w+)?$"
 		       defaults="controller=Home, action=Index, id=" />
 
 		<route name="DefaultReversed"
