@@ -10,6 +10,10 @@
 		<dependencies>
 			<dependency name="Main"/>
 		</dependencies>
+
+		<assemblies>
+			<assembly name="Zongsoft.Web.Plugins" />
+		</assemblies>
 	</manifest>
 
 	<builders>
@@ -75,6 +79,6 @@
 
 	<!-- 在站点映射中添加首页项 -->
 	<extension path="/Workbench/Sitemap">
-		<node name="Home" text="{res:Text:HomePage}" url="/Home" />
+		<node name="Home" text="{res:Text.HomePage}" url="/Home" />
 	</extension>
 </plugin>
