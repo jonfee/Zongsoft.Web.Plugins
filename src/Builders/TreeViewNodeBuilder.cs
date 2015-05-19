@@ -44,7 +44,7 @@ namespace Zongsoft.Web.Plugins.Builders
 
 			var node = new Zongsoft.Web.Controls.TreeViewNode(builtin.Name, builtin.Properties.GetValue<string>("text"))
 			{
-				Url = builtin.Properties.GetRawValue("url") ?? string.Empty,
+				Url = builtin.Properties.GetValue<string>("url") ?? string.Empty,
 				Icon = builtin.Properties.GetValue<string>("icon"),
 				Text = builtin.Properties.GetValue<string>("text", builtin.Name),
 				ToolTip = builtin.Properties.GetValue<string>("tooltip"),
