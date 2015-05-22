@@ -155,6 +155,16 @@ namespace Zongsoft.Web.Plugins.Mvc
 			string actionName = context.RouteData.GetRequiredString("action");
 			string areaName = context.RouteData.DataTokens["area"] as string;
 
+			foreach(var modelState in context.ViewData.ModelState)
+			{
+				var dic = ((ViewPage)page).Html.GetUnobtrusiveValidationAttributes(modelState.Key);
+
+				var control = this.FindControl(page, modelState.Key) as Zongsoft.Web.Controls.DataBoundControl;
+
+				if(control != null)
+					control.SetPropertyValue<string>("data-validate-error", modelState.Value.Errors[0].ErrorMessage);
+			}
+
 			//生成主题相关的内容
 			if(Zongsoft.Web.Themes.ThemeUtility.GenerateTheme(page))
 			{
@@ -198,6 +208,27 @@ namespace Zongsoft.Web.Plugins.Mvc
 						childNode.Build(placeControl);
 				}
 			}
+		}
+
+		private Control FindControl(Control container, string id)
+		{
+			if(container == null || string.IsNullOrWhiteSpace(id))
+				return null;
+
+			var control = container.FindControl(id);
+
+			if(control != null)
+				return control;
+
+			foreach(var child in container.Controls)
+			{
+				control = this.FindControl(child as Control, id);
+
+				if(control != null)
+					return control;
+			}
+
+			return null;
 		}
 
 		/// <summary>

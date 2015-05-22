@@ -55,15 +55,16 @@ namespace Zongsoft.Web.Plugins.Builders
 		{
 			#region 公共属性
 			[Bindable(true)]
+			[Zongsoft.Web.Controls.PropertyMetadata(PropertyRender = "Zongsoft.Web.Controls.UrlPropertyRender.Default, Zongsoft.Web")]
 			public string Action
 			{
 				get
 				{
-					return this.GetAttributeValue("Action", string.Empty);
+					return this.GetPropertyValue(() => this.Action);
 				}
 				set
 				{
-					this.SetAttributeValue(() => this.Action, value);
+					this.SetPropertyValue(() => this.Action, value);
 				}
 			}
 
@@ -73,22 +74,24 @@ namespace Zongsoft.Web.Plugins.Builders
 			{
 				get
 				{
-					return this.GetAttributeValue("Method", "POST");
+					return this.GetPropertyValue(() => this.Method);
 				}
 				set
 				{
-					this.SetAttributeValue(() => this.Method, value);
+					this.SetPropertyValue(() => this.Method, value);
 				}
 			}
 			#endregion
 
 			#region 重写方法
-			public override void RenderControl(System.Web.UI.HtmlTextWriter writer)
+			protected override void Render(HtmlTextWriter writer)
 			{
-				writer.AddAttribute(HtmlTextWriterAttribute.Name, this.ID);
+				//生成所有元素标签
 				this.RenderAttributes(writer);
+
 				writer.RenderBeginTag(HtmlTextWriterTag.Form);
 
+				//生成表单内容的所有子控件
 				this.RenderChildren(writer);
 
 				writer.RenderEndTag();
