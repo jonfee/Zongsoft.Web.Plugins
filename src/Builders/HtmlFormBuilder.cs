@@ -87,7 +87,7 @@ namespace Zongsoft.Web.Plugins.Builders
 			protected override void Render(HtmlTextWriter writer)
 			{
 				//生成所有元素标签
-				this.RenderAttributes(writer);
+				this.AddAttributes(writer);
 
 				writer.RenderBeginTag(HtmlTextWriterTag.Form);
 
