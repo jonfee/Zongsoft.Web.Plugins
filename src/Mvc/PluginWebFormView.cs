@@ -162,7 +162,7 @@ namespace Zongsoft.Web.Plugins.Mvc
 				var control = this.FindControl(page, modelState.Key) as Zongsoft.Web.Controls.DataBoundControl;
 
 				if(control != null)
-					control.SetPropertyValue<string>("data-validate-error", modelState.Value.Errors[0].ErrorMessage);
+					control.SetAttributeValue("data-validate-error", modelState.Value.Errors[0].ErrorMessage);
 			}
 
 			//生成主题相关的内容
