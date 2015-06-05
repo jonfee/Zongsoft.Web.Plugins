@@ -49,6 +49,8 @@ namespace Zongsoft.Web.Plugins.Builders
 				Text = builtin.Properties.GetValue<string>("text", builtin.Name),
 				ToolTip = builtin.Properties.GetValue<string>("tooltip"),
 				Description = builtin.Properties.GetValue<string>("description"),
+				CssClass = builtin.Properties.GetValue<string>("cssClass"),
+				ListCssClass = builtin.Properties.GetValue<string>("listCssClass"),
 				Selected = builtin.Properties.GetValue<bool>("selected", false),
 				Visible = builtin.Properties.GetValue<bool>("visible", true),
 			};
