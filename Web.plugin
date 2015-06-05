@@ -62,10 +62,10 @@
 
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
 	<extension path="/Workbench">
-		<menu name="MainMenu" cssClass="menu" place="HeaderPlaceHolder.MenubarPlaceHolder" />
-		<menu name="Express" cssClass="express" place="HeaderPlaceHolder.ExpressPlaceHolder" />
-		<tree name="Navigator" cssClass="navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
-		<sitemap name="Sitemap" cssClass="sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
+		<menu name="MainMenu" cssClass="ui menu" isDropdown="true" place="HeaderPlaceHolder.MenubarPlaceHolder" />
+		<menu name="Express" cssClass="ui menu express" place="HeaderPlaceHolder.ExpressPlaceHolder" />
+		<tree name="Navigator" cssClass="ui vertical menu navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
+		<sitemap name="Sitemap" cssClass="ui breadcrumb sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
 
 		<form name="__ThemeForm__" action="${Request.Path}" method="GET" place="HeaderPlaceHolder.ExpressPlaceHolder">
 			<control name="__theme__" type="Zongsoft.Web.Controls.ComboBox, Zongsoft.Web" AutoSubmit="True" DataSource="${Items[__themes__]}" SelectedValue="${Items[__theme__]}" CssClass="themes" />
@@ -74,11 +74,11 @@
 
 	<!-- 在主菜单中添加首页菜单项 -->
 	<extension path="/Workbench/MainMenu">
-		<menuItem name="Home" text="{res:Text.HomePage}" url="/Home/Index" />
+		<menuItem name="Home" text="{res:Text.HomePage}" icon="Home" url="/Home/Index" />
 	</extension>
 
 	<!-- 在站点映射中添加首页项 -->
 	<extension path="/Workbench/Sitemap">
-		<node name="Home" text="{res:Text.HomePage}" url="/Home" />
+		<node name="Home" text="{res:Text.HomePage}" icon="Home" url="/Home" />
 	</extension>
 </plugin>
