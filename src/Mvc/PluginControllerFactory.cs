@@ -39,6 +39,10 @@ namespace Zongsoft.Web.Plugins.Mvc
 {
 	public class PluginControllerFactory : IControllerFactory
 	{
+		#region 常量定义
+		private const string ROOT_CONTROLLERS_PATH = "/Workspace/Controllers";
+		#endregion
+
 		#region 私有变量
 		private Zongsoft.Plugins.PluginContext _pluginContext;
 		#endregion
@@ -56,7 +60,7 @@ namespace Zongsoft.Web.Plugins.Mvc
 		#region 接口成员
 		public IController CreateController(RequestContext requestContext, string controllerName)
 		{
-			var node = this.GetControllerNode(requestContext, controllerName, true);
+			var node = this.GetControllerNode(requestContext, controllerName);
 
 			if(node == null || node.NodeType == PluginTreeNodeType.Empty)
 				return null;
@@ -79,7 +83,7 @@ namespace Zongsoft.Web.Plugins.Mvc
 
 		System.Web.SessionState.SessionStateBehavior IControllerFactory.GetControllerSessionBehavior(RequestContext requestContext, string controllerName)
 		{
-			var node = this.GetControllerNode(requestContext, controllerName, true);
+			var node = this.GetControllerNode(requestContext, controllerName);
 
 			if(node == null || node.NodeType == PluginTreeNodeType.Empty)
 				return System.Web.SessionState.SessionStateBehavior.Default;
@@ -108,21 +112,23 @@ namespace Zongsoft.Web.Plugins.Mvc
 		#endregion
 
 		#region 私有方法
-		private PluginTreeNode GetControllerNode(RequestContext requestContext, string controllerName, bool updateToRouteData)
+		private PluginTreeNode GetControllerNode(RequestContext requestContext, string controllerName)
 		{
 			Route route = requestContext.RouteData.Route as Route;
 
 			if(route == null)
 				return null;
 
-			string area = VirtualPathUtility.GetArea(requestContext.RouteData);
-			string controllerPath = PluginPath.Combine(string.IsNullOrEmpty(area) ? "Workspace" : area, "Controllers", controllerName);
+			var controllerPath = string.Empty;
+			var area = VirtualPathUtility.GetArea(requestContext.RouteData);
 
-			if(updateToRouteData)
-			{
-				requestContext.RouteData.DataTokens["area"] = area;
-				requestContext.RouteData.DataTokens["controller.path"] = controllerPath;
-			}
+			if(string.IsNullOrWhiteSpace(area))
+				controllerPath = PluginPath.Combine(ROOT_CONTROLLERS_PATH, controllerName);
+			else
+				controllerPath = PluginPath.Combine(ROOT_CONTROLLERS_PATH, area, controllerName);
+
+			requestContext.RouteData.DataTokens["area"] = area;
+			requestContext.RouteData.DataTokens["controller.path"] = controllerPath;
 
 			return _pluginContext.PluginTree.Find(controllerPath);
 		}

@@ -42,6 +42,7 @@ namespace Zongsoft.Web.Plugins
 
 			//替换系统默认的控制器工厂
 			this.ControllerFactory = new Zongsoft.Web.Plugins.Mvc.PluginControllerFactory(this.PluginContext);
+
 			//替换系统默认的虚拟路径提供者
 			this.VirtualPathProvider = new Zongsoft.Web.Plugins.Hosting.PluginVirtualPathProvider(this.PluginContext);
 		}

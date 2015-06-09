@@ -39,9 +39,11 @@ namespace Zongsoft.Web.Plugins.Mvc
 	/// 支持由插件注入的MVC过滤器提供程序。
 	/// </summary>
 	/// <remarks>
+	///		<para>全局过滤器挂载地址位于：/Workspace/Filters 插件路径下；控制器(Controller)和操作(Action)级的过滤器挂载地址位于：/Workspace/Filters/ + $(Area) + $(ControllerName) 插件路径下。</para>
+	///		<para>控制器(Controller)和操作(Action)级过滤器的区别依据为构件属性集中是否包含不为空的action这个属性，如果该属性为空或不存在则表示为控制器级的过滤器。</para>
 	///		<example>
 	///		<![CDATA[
-	///		<extension path="/Tollgates/Filters/VehiclePassing">
+	///		<extension path="/Workspace/Filters/Tollgates/VehiclePassing">
 	///			<object name="controller-action-filter"
 	///			        type="AAA.BBB.XXXFilter, assemblyName"
 	///			        order="0"
@@ -60,6 +62,10 @@ namespace Zongsoft.Web.Plugins.Mvc
 	/// </remarks>
 	public class PluginFilterProvider : IFilterProvider
 	{
+		#region 常量定义
+		private const string ROOT_FILTERS_PATH = "/Workspace/Filters";
+		#endregion
+
 		#region 成员字段
 		private PluginContext _pluginContext;
 		#endregion
@@ -78,7 +84,7 @@ namespace Zongsoft.Web.Plugins.Mvc
 		public IEnumerable<Filter> GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
 		{
 			var filters = new List<Filter>();
-			var filtersNode = _pluginContext.PluginTree.Find("/Workspace/Filters");
+			var filtersNode = _pluginContext.PluginTree.Find(ROOT_FILTERS_PATH);
 
 			if(filtersNode != null)
 			{
@@ -92,7 +98,7 @@ namespace Zongsoft.Web.Plugins.Mvc
 			var area = (string)controllerContext.RouteData.DataTokens["area"];
 			var controllerName = controllerContext.RouteData.GetRequiredString("controller");
 
-			filtersNode = _pluginContext.PluginTree.Find(area, "Filters", controllerName);
+			filtersNode = _pluginContext.PluginTree.Find(ROOT_FILTERS_PATH, area, controllerName);
 
 			if(filtersNode != null)
 			{
