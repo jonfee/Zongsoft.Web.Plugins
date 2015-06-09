@@ -60,6 +60,12 @@
 		<object name="PluginExplorer" type="Zongsoft.Web.Plugins.Mvc.PluginExplorerController, Zongsoft.Web.Plugins" />
 	</extension>
 
+	<!-- 挂载全局过滤器 -->
+	<extension path="/Workspace/Filters">
+		<!-- 以下是授权验证的过滤器 -->
+		<object name="AuthorizationFilter" type="Zongsoft.Web.Plugins.Mvc.AuthorizationFilter, Zongsoft.Web.Plugins" />
+	</extension>
+
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
 	<extension path="/Workbench">
 		<menu name="MainMenu" cssClass="ui menu" isDropdown="true" place="HeaderPlaceHolder.MenubarPlaceHolder" />

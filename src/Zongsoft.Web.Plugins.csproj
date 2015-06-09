@@ -90,6 +90,7 @@
     <Compile Include="Http\HttpControllerActionSelector.cs" />
     <Compile Include="Http\PluginHttpControllerDescriptor.cs" />
     <Compile Include="Http\PluginHttpControllerSelector.cs" />
+    <Compile Include="Mvc\AuthorizationFilter.cs" />
     <Compile Include="Mvc\PluginControllerFactory.cs" />
     <Compile Include="Mvc\PluginExplorerController.cs" />
     <Compile Include="Mvc\PluginFilterProvider.cs" />
