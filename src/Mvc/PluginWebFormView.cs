@@ -157,6 +157,9 @@ namespace Zongsoft.Web.Plugins.Mvc
 
 			foreach(var modelState in context.ViewData.ModelState)
 			{
+				if(modelState.Value.Errors.Count < 1)
+					continue;
+
 				var dic = ((ViewPage)page).Html.GetUnobtrusiveValidationAttributes(modelState.Key);
 
 				var control = this.FindControl(page, modelState.Key) as Zongsoft.Web.Controls.DataBoundControl;
