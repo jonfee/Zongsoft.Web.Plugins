@@ -39,6 +39,10 @@ namespace Zongsoft.Web.Plugins.Http
 {
 	public class PluginHttpControllerSelector : IHttpControllerSelector
 	{
+		#region 常量定义
+		private const string ROOT_CONTROLLERS_PATH = "/Workspace/Controllers";
+		#endregion
+
 		#region 成员字段
 		private Zongsoft.Plugins.PluginContext _pluginContext;
 		#endregion
@@ -62,16 +66,30 @@ namespace Zongsoft.Web.Plugins.Http
 		public HttpControllerDescriptor SelectController(HttpRequestMessage request)
 		{
 			var routeData = (IHttpRouteData)request.Properties[System.Web.Http.Hosting.HttpPropertyKeys.HttpRouteDataKey];
-			object area;
 
-			if(!routeData.Route.DataTokens.TryGetValue("area", out area))
-				area = VirtualPathUtility.GetArea(routeData.Route.RouteTemplate);
+			if(routeData == null)
+				return null;
 
-			string controllerPath = Zongsoft.Plugins.PluginPath.Combine(string.IsNullOrEmpty((string)area) ? "Workbench" : (string)area, "Controllers", (string)routeData.Values["controller"]);
+			object areaData;
+			string areaName, controllerPath;
+
+			if(routeData.Route.DataTokens.TryGetValue("area", out areaData))
+				areaName = (string)areaData;
+			else
+				areaName = VirtualPathUtility.GetArea(routeData.Route.RouteTemplate);
+
+			if(string.IsNullOrWhiteSpace(areaName))
+				controllerPath = Zongsoft.Plugins.PluginPath.Combine(ROOT_CONTROLLERS_PATH, (string)routeData.Values["controller"]);
+			else
+				controllerPath = Zongsoft.Plugins.PluginPath.Combine(ROOT_CONTROLLERS_PATH, areaName, (string)routeData.Values["controller"]);
+
 			var node = _pluginContext.PluginTree.Find(controllerPath);
 
 			if(node == null)
 				return null;
+
+			routeData.Values["area"] = areaName;
+			routeData.Values["controller.path"] = controllerPath;
 
 			return new PluginHttpControllerDescriptor(request.GetConfiguration(), node);
 		}
