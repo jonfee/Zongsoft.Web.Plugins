@@ -91,8 +91,10 @@
     <Compile Include="Http\PluginHttpControllerDescriptor.cs" />
     <Compile Include="Http\PluginHttpControllerSelector.cs" />
     <Compile Include="Mvc\AuthorizationFilter.cs" />
+    <Compile Include="Mvc\Controllers\BucketController.cs" />
+    <Compile Include="Mvc\Controllers\FileController.cs" />
     <Compile Include="Mvc\PluginControllerFactory.cs" />
-    <Compile Include="Mvc\PluginExplorerController.cs" />
+    <Compile Include="Mvc\Controllers\PluginExplorerController.cs" />
     <Compile Include="Mvc\PluginFilterProvider.cs" />
     <Compile Include="Mvc\PluginViewEngine.cs" />
     <Compile Include="Mvc\PluginWebFormView.cs" />
