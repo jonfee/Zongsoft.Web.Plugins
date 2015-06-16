@@ -37,7 +37,7 @@ using Zongsoft.Plugins.Builders;
 
 namespace Zongsoft.Web.Plugins.Builders
 {
-	[BuilderBehaviour(ValueType = typeof(Sitemap))]
+	[BuilderBehaviour(typeof(Sitemap))]
 	public class SitemapBuilder : ControlBuilder
 	{
 		#region 重写方法

@@ -287,10 +287,10 @@ namespace Zongsoft.Web.Plugins.Controllers
 
 					var bucketPath = this.ResolveBucketPath(fileInfo.CreatedTime);
 
-					if(!FileSystem.Instance.Directory.Exists(bucketPath))
-						FileSystem.Instance.Directory.Create(bucketPath);
+					if(!FileSystem.Directory.Exists(bucketPath))
+						FileSystem.Directory.Create(bucketPath);
 
-					return FileSystem.Instance.File.Open(fileInfo.Path, FileMode.CreateNew, FileAccess.Write);
+					return FileSystem.File.Open(fileInfo.Path, FileMode.CreateNew, FileAccess.Write);
 				}
 				catch
 				{

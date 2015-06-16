@@ -34,7 +34,7 @@ using Zongsoft.Plugins.Builders;
 
 namespace Zongsoft.Web.Plugins.Builders
 {
-	[BuilderBehaviour(IsPreserveValue = false, ValueType = typeof(Zongsoft.Web.Controls.TreeViewNode))]
+	[BuilderBehaviour(typeof(Zongsoft.Web.Controls.TreeViewNode))]
 	public class TreeViewNodeBuilder : BuilderBase
 	{
 		#region 重写方法

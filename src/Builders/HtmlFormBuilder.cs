@@ -36,7 +36,7 @@ using Zongsoft.Plugins.Builders;
 
 namespace Zongsoft.Web.Plugins.Builders
 {
-	[Zongsoft.Plugins.Builders.BuilderBehaviour(ValueType = typeof(HtmlForm))]
+	[Zongsoft.Plugins.Builders.BuilderBehaviour(typeof(HtmlForm))]
 	public class HtmlFormBuilder : ControlBuilder
 	{
 		#region 重写方法

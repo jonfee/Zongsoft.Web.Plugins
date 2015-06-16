@@ -37,7 +37,7 @@ using Zongsoft.Plugins.Builders;
 
 namespace Zongsoft.Web.Plugins.Builders
 {
-	[BuilderBehaviour(IsPreserveValue = false, ValueType = typeof(Control))]
+	[BuilderBehaviour(typeof(Control))]
 	public class ControlBuilder : BuilderBase
 	{
 		#region 构造函数
