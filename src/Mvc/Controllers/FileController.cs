@@ -270,11 +270,16 @@ namespace Zongsoft.Web.Plugins.Controllers
 				if(headers == null)
 					throw new ArgumentNullException("headers");
 
+				var contentType = headers.ContentType.ToString();
+
+				if(string.IsNullOrWhiteSpace(contentType))
+					contentType = System.Web.MimeMapping.GetMimeMapping(headers.ContentDisposition.FileName);
+
 				//创建一个文件信息实体对象
 				var fileInfo = new StorageFileInfo(_bucketId)
 				{
 					Name = Zongsoft.Common.StringExtension.RemoveCharacters(headers.ContentDisposition.FileName, System.IO.Path.GetInvalidFileNameChars()).Trim('"', '\''),
-					Type = headers.ContentType.ToString(),
+					Type = contentType,
 					Size = parent.Headers.ContentLength.HasValue ? parent.Headers.ContentLength.Value : -1,
 				};
 
