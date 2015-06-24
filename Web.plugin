@@ -52,12 +52,12 @@
 
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
-		       constraints="action=^[A-Za-z_]+(?:-\w+)?$"
+		       constraints="action=^[A-Za-z]+$"
 		       defaults="controller=Home, action=Index, id=" />
 
 		<route name="DefaultReversed"
 		       url="{controller}/{id}/{action}"
-		       defaults="controller=Home, action=Index, id=" />
+		       defaults="controller=Home, action=Index" />
 	</extension>
 
 	<!-- 挂载默认控制器 -->
