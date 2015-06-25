@@ -74,8 +74,8 @@
 
 	<!-- 挂载全局过滤器 -->
 	<extension path="/Workspace/Filters">
-		<!-- 以下是授权验证的过滤器 -->
-		<object name="AuthorizationFilter" type="Zongsoft.Web.Plugins.Mvc.AuthorizationFilter, Zongsoft.Web.Plugins" />
+		<object name="AuthorizationFilter" type="Zongsoft.Web.Mvc.AuthorizationFilter, Zongsoft.Web" />
+		<object name="ValidateInputFilter" type="Zongsoft.Web.Mvc.ValidateInputFilter, Zongsoft.Web" method="POST, PUT" />
 	</extension>
 
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
