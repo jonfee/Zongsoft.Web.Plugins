@@ -82,7 +82,7 @@
 	<extension path="/Workbench">
 		<menu name="MainMenu" cssClass="ui menu" isDropdown="true" place="HeaderPlaceHolder.MenubarPlaceHolder" />
 		<menu name="Express" cssClass="ui menu express" place="HeaderPlaceHolder.ExpressPlaceHolder" />
-		<tree name="Navigator" cssClass="ui vertical menu navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
+		<tree name="Navigator" cssClass="ui vertical sidebar menu navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
 		<sitemap name="Sitemap" cssClass="ui breadcrumb sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
 
 		<form name="__ThemeForm__" action="${Request.Path}" method="GET" place="HeaderPlaceHolder.ExpressPlaceHolder">
@@ -92,11 +92,11 @@
 
 	<!-- 在主菜单中添加首页菜单项 -->
 	<extension path="/Workbench/MainMenu">
-		<menuItem name="Home" text="{res:Text.HomePage}" icon="Home" url="/Home/Index" />
+		<menuItem name="Home" text="{res:Text.HomePage}" icon="Home" url="/" />
 	</extension>
 
 	<!-- 在站点映射中添加首页项 -->
 	<extension path="/Workbench/Sitemap">
-		<node name="Home" text="{res:Text.HomePage}" icon="Home" url="/Home" />
+		<node name="Home" text="{res:Text.HomePage}" icon="Home" url="/" />
 	</extension>
 </plugin>
