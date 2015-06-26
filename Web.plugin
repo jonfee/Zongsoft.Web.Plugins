@@ -81,7 +81,7 @@
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->
 	<extension path="/Workbench">
 		<menu name="MainMenu" cssClass="ui menu" isDropdown="true" place="HeaderPlaceHolder.MenubarPlaceHolder" />
-		<menu name="Express" cssClass="ui menu express" place="HeaderPlaceHolder.ExpressPlaceHolder" />
+		<menu name="Express" cssClass="right menu express" place="ExpressPlaceHolder" />
 		<tree name="Navigator" cssClass="ui vertical sidebar menu navigator" place="BodyPlaceHolder.OutlinePlaceHolder" />
 		<sitemap name="Sitemap" cssClass="ui breadcrumb sitemap" place="BodyPlaceHolder.SitemapPlaceHolder" path="/Workbench/Sitemap/Home" />
 
