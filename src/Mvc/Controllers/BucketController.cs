@@ -145,24 +145,17 @@ namespace Zongsoft.Web.Plugins.Controllers
 		}
 
 		/// <summary>
-		/// 获取指定文件容器内的文件总数。
+		/// 获取指定文件容器总数或指定文件容器内的文件总数。
 		/// </summary>
 		/// <param name="id">指定的文件容器编号。</param>
-		/// <returns>返回的文件总数。</returns>
+		/// <returns>如果未指定文件容器编号，即<paramref name="id"/>参数是否为空(null)，则返回的文件容器总数，否则返回指定编号的文件容器内的文件总数。</returns>
 		[HttpGet]
-		public int Count(int id)
+		public int Count(int? id)
 		{
-			return this.Bucket.GetFileCount(id);
-		}
-
-		/// <summary>
-		/// 获取文件容器的总数。
-		/// </summary>
-		/// <returns>返回的文件容器总数。</returns>
-		[HttpGet]
-		public int Count()
-		{
-			return this.Bucket.GetBucketCount();
+			if(id.HasValue)
+				return this.Bucket.GetFileCount(id.Value);
+			else
+				return this.Bucket.GetBucketCount();
 		}
 		#endregion
 	}
