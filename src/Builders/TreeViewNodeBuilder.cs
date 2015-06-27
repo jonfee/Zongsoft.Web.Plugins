@@ -46,7 +46,7 @@ namespace Zongsoft.Web.Plugins.Builders
 			{
 				Url = builtin.Properties.GetValue<string>("url") ?? string.Empty,
 				Icon = builtin.Properties.GetValue<string>("icon"),
-				Text = builtin.Properties.GetValue<string>("text", builtin.Name),
+				Text = builtin.Properties.GetValue<string>("text"),
 				ToolTip = builtin.Properties.GetValue<string>("tooltip"),
 				Description = builtin.Properties.GetValue<string>("description"),
 				CssClass = builtin.Properties.GetValue<string>("cssClass"),
