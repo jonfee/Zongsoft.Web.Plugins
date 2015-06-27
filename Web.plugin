@@ -40,15 +40,23 @@
 		       url="PluginExplorer/{action}"
 		       defaults="controller=PluginExplorer" />
 
-		<route name="Api-Storage"
+		<route name="ApiStorage"
 		       url="api/storages/{controller}/{id}/{action}"
-		       constraints="id=^$|^([A-Fa-f0-9]{8}(-?[A-Fa-f0-9]{4}){3}-?[A-Fa-f0-9]{12})$|^(\d+[A-Za-z0-9]*)$"
-		       defaults="id=, action=" />
+		       constraints="id=^([A-Fa-f0-9]{8}(-?[A-Fa-f0-9]{4}){3}-?[A-Fa-f0-9]{12})$|^(\d+[A-Za-z0-9]*)$"
+		       defaults="action=" />
+
+		<route name="ApiStorageReversed"
+		       url="api/storages/{controller}/{action}/{id}"
+		       defaults="id=" />
 
 		<route name="Api"
 		       url="api/{controller}/{id}/{action}"
-		       constraints="id=^$|^([A-Fa-f0-9]{8}(-?[A-Fa-f0-9]{4}){3}-?[A-Fa-f0-9]{12})$|^(\d+[A-Za-z0-9]*)$"
-		       defaults="id=, action=" />
+		       constraints="id=^([A-Fa-f0-9]{8}(-?[A-Fa-f0-9]{4}){3}-?[A-Fa-f0-9]{12})$|^(\d+[A-Za-z0-9]*)$"
+		       defaults="action=" />
+
+		<route name="ApiReversed"
+		       url="api/{controller}/{action}/{id}"
+		       defaults="id=" />
 
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
