@@ -28,7 +28,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -178,18 +180,27 @@ namespace Zongsoft.Web.Plugins.Controllers
 				throw new HttpResponseException(HttpStatusCode.NotFound);
 
 			//创建多段表单信息的文件流操作的供应程序
-			var provider = new MultipartStorageFileStreamProvider(id, bucketInfo.Path);
+			var provider = new MultipartStorageFileStreamProvider(id, ResolveBucketPath(bucketInfo.Path, DateTime.Now));
 
 			//从当前请求内容读取多段信息并写入文件中
-			await this.Request.Content.ReadAsMultipartAsync(provider);
-
-			foreach(var fileInfo in provider.FileData)
+			return await this.Request.Content.ReadAsMultipartAsync(provider).ContinueWith(t =>
 			{
-				this.File.Create(fileInfo, null);
-			}
+				var pro = t.Result;
 
-			//返回新增的文件信息实体集
-			return provider.FileData;
+				foreach(var fileInfo in pro.FileData)
+				{
+					if(pro.FormData.Count > 0)
+					{
+						for(int i = 0; i < pro.FormData.Count; i++ )
+							fileInfo.ExtendedProperties.Add(pro.FormData.GetKey(i), pro.FormData[i]);
+					}
+
+					this.File.Create(fileInfo, null);
+				}
+
+				//返回新增的文件信息实体集
+				return pro.FileData;
+			});
 		}
 
 		/// <summary>
@@ -218,6 +229,8 @@ namespace Zongsoft.Web.Plugins.Controllers
 			private string _bucketPath;
 			private Zongsoft.IO.IStorageFile _file;
 			private Collection<StorageFileInfo> _fileData;
+			private System.Collections.Specialized.NameValueCollection _formData;
+			private Collection<bool> _isFormData;
 			#endregion
 
 			#region 构造函数
@@ -232,6 +245,8 @@ namespace Zongsoft.Web.Plugins.Controllers
 				_bucketId = bucketId;
 				_bucketPath = bucketPath;
 				_fileData = new Collection<StorageFileInfo>();
+				_isFormData = new Collection<bool>();
+				_formData = new System.Collections.Specialized.NameValueCollection();
 			}
 			#endregion
 
@@ -259,6 +274,14 @@ namespace Zongsoft.Web.Plugins.Controllers
 					return _fileData;
 				}
 			}
+
+			public System.Collections.Specialized.NameValueCollection FormData
+			{
+				get
+				{
+					return _formData;
+				}
+			}
 			#endregion
 
 			#region 重写方法
@@ -270,17 +293,25 @@ namespace Zongsoft.Web.Plugins.Controllers
 				if(headers == null)
 					throw new ArgumentNullException("headers");
 
-				var contentType = headers.ContentType.ToString();
+				if(string.IsNullOrEmpty(headers.ContentDisposition.FileName))
+				{
+					_isFormData.Add(true);
+					return new MemoryStream();
+				}
+
+				var contentType = headers.ContentType == null ? string.Empty : headers.ContentType.MediaType;
 
 				if(string.IsNullOrWhiteSpace(contentType))
 					contentType = System.Web.MimeMapping.GetMimeMapping(headers.ContentDisposition.FileName);
+
+				_isFormData.Add(false);
 
 				//创建一个文件信息实体对象
 				var fileInfo = new StorageFileInfo(_bucketId)
 				{
 					Name = Zongsoft.Common.StringExtension.RemoveCharacters(headers.ContentDisposition.FileName, System.IO.Path.GetInvalidFileNameChars()).Trim('"', '\''),
 					Type = contentType,
-					Size = parent.Headers.ContentLength.HasValue ? parent.Headers.ContentLength.Value : -1,
+					Size = headers.ContentDisposition.Size.HasValue ? headers.ContentDisposition.Size.Value : -1,
 				};
 
 				fileInfo.Path = this.GetFilePath(fileInfo);
@@ -290,10 +321,8 @@ namespace Zongsoft.Web.Plugins.Controllers
 					//将文件信息对象加入到集合中
 					_fileData.Add(fileInfo);
 
-					var bucketPath = this.ResolveBucketPath(fileInfo.CreatedTime);
-
-					if(!FileSystem.Directory.Exists(bucketPath))
-						FileSystem.Directory.Create(bucketPath);
+					if(!FileSystem.Directory.Exists(_bucketPath))
+						FileSystem.Directory.Create(_bucketPath);
 
 					return FileSystem.File.Open(fileInfo.Path, FileMode.CreateNew, FileAccess.Write);
 				}
@@ -303,31 +332,55 @@ namespace Zongsoft.Web.Plugins.Controllers
 					throw;
 				}
 			}
+
+			public override Task ExecutePostProcessingAsync()
+			{
+				return Task.Run(() =>
+				{
+					int index = 0;
+
+					foreach(var content in this.Contents)
+					{
+						if(_isFormData[index++])
+						{
+							string fieldName = this.UnquoteToken(content.Headers.ContentDisposition.Name) ?? string.Empty;
+							_formData.Add(fieldName, content.ReadAsStringAsync().Result);
+						}
+					}
+				});
+			}
 			#endregion
 
 			#region 私有方法
 			private string GetFilePath(StorageFileInfo fileInfo)
 			{
-				var bucketPath = this.ResolveBucketPath(fileInfo.CreatedTime);
-
 				//返回当前文件的完整虚拟路径
-				return Zongsoft.IO.Path.Combine(bucketPath, string.Format("[{0}]{1:n}{2}", fileInfo.BucketId, fileInfo.FileId, System.IO.Path.GetExtension(fileInfo.Name).ToLowerInvariant()));
+				return Zongsoft.IO.Path.Combine(_bucketPath, string.Format("[{0}]{1:n}{2}", fileInfo.BucketId, fileInfo.FileId, System.IO.Path.GetExtension(fileInfo.Name).ToLowerInvariant()));
 			}
 
-			private string ResolveBucketPath(DateTime timestamp)
+			private string UnquoteToken(string token)
 			{
-				var path = this.BucketPath;
+				if(string.IsNullOrWhiteSpace(token))
+					return token;
 
-				if(!string.IsNullOrWhiteSpace(path))
-				{
-					return path.Replace("$(year)", timestamp.Year.ToString("0000"))
-					           .Replace("$(month)", timestamp.Month.ToString("00"))
-					           .Replace("$(day)", timestamp.Day.ToString("00"));
-				}
+				if(token.StartsWith("\"", StringComparison.Ordinal) && token.EndsWith("\"", StringComparison.Ordinal) && token.Length > 1)
+					return token.Substring(1, token.Length - 2);
 
-				return path;
+				return token;
 			}
 			#endregion
+		}
+
+		private static string ResolveBucketPath(string path, DateTime timestamp)
+		{
+			if(!string.IsNullOrWhiteSpace(path))
+			{
+				return path.Replace("$(year)", timestamp.Year.ToString("0000"))
+						   .Replace("$(month)", timestamp.Month.ToString("00"))
+						   .Replace("$(day)", timestamp.Day.ToString("00"));
+			}
+
+			return path;
 		}
 	}
 }
