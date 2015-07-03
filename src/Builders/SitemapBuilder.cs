@@ -152,7 +152,7 @@ namespace Zongsoft.Web.Plugins.Builders
 
 				if(treeNode != null)
 				{
-					if((!string.IsNullOrWhiteSpace(treeNode.Url)) && url.StartsWith(treeNode.Url, StringComparison.OrdinalIgnoreCase))
+					if((!string.IsNullOrWhiteSpace(treeNode.NavigateUrl)) && url.StartsWith(treeNode.NavigateUrl, StringComparison.OrdinalIgnoreCase))
 						return node;
 				}
 
@@ -200,7 +200,7 @@ namespace Zongsoft.Web.Plugins.Builders
 						}
 						else
 						{
-							writer.AddAttribute(HtmlTextWriterAttribute.Href, string.IsNullOrWhiteSpace(treeNode.Url) ? "#" : treeNode.Url);
+							writer.AddAttribute(HtmlTextWriterAttribute.Href, string.IsNullOrWhiteSpace(treeNode.NavigateUrl) ? "#" : treeNode.NavigateUrl);
 							writer.AddAttribute(HtmlTextWriterAttribute.Alt, treeNode.ToolTip);
 							writer.RenderBeginTag(HtmlTextWriterTag.A);
 							writer.WriteEncodedText(treeNode.Text);
