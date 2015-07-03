@@ -44,16 +44,23 @@ namespace Zongsoft.Web.Plugins.Builders
 
 			var node = new Zongsoft.Web.Controls.TreeViewNode(builtin.Name, builtin.Properties.GetValue<string>("text"))
 			{
-				Url = builtin.Properties.GetValue<string>("url") ?? string.Empty,
 				Icon = builtin.Properties.GetValue<string>("icon"),
 				Text = builtin.Properties.GetValue<string>("text"),
 				ToolTip = builtin.Properties.GetValue<string>("tooltip"),
 				Description = builtin.Properties.GetValue<string>("description"),
+				NavigateUrl = builtin.Properties.GetValue<string>("url") ?? string.Empty,
+				NavigateCssClass = builtin.Properties.GetValue<string>("navigateCssClass"),
 				CssClass = builtin.Properties.GetValue<string>("cssClass"),
 				ListCssClass = builtin.Properties.GetValue<string>("listCssClass"),
 				Selected = builtin.Properties.GetValue<bool>("selected", false),
 				Visible = builtin.Properties.GetValue<bool>("visible", true),
 			};
+
+			node.Image.CssClass = builtin.Properties.GetValue<string>("image-cssClass");
+			node.Image.Dimension = builtin.Properties.GetValue<Zongsoft.Web.Controls.Dimension>("image-dimension", Controls.Dimension.None);
+			node.Image.ImageUrl = builtin.Properties.GetValue<string>("image-url");
+			node.Image.NavigateUrl = builtin.Properties.GetValue<string>("image-navigateUrl");
+			node.Image.Placeholder = builtin.Properties.GetValue<string>("image-placeholder");
 
 			//返回构建的目标对象
 			return node;
