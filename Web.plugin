@@ -58,7 +58,7 @@
 
 		<route name="ApiReversed"
 		       url="api/{controller}/{action}/{id}"
-		       defaults="id=" />
+		       defaults="action=, id=" />
 
 		<route name="Default"
 		       url="{controller}/{action}/{id}"
@@ -74,6 +74,12 @@
 	<extension path="/Workspace/Controllers">
 		<!-- 挂载插件管理器的控制器 -->
 		<object name="PluginExplorer" type="Zongsoft.Web.Plugins.Controllers.PluginExplorerController, Zongsoft.Web.Plugins" />
+	</extension>
+
+	<!-- 挂载文件目录系统控制器 -->
+	<extension path="/Workspace/Controllers/Api">
+		<object name="File" schema="zfs.oss" basePath="/automao-data/tests/" type="Zongsoft.Web.Controllers.FileController, Zongsoft.Web" />
+		<object name="Directory" type="Zongsoft.Web.Controllers.DirectoryController, Zongsoft.Web" />
 	</extension>
 
 	<!-- 挂载存储文件控制器 -->
