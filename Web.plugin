@@ -78,15 +78,16 @@
 
 	<!-- 挂载文件目录系统控制器 -->
 	<extension path="/Workspace/Controllers/Api">
-		<object name="File" schema="zfs.oss" basePath="/automao-data/tests/" type="Zongsoft.Web.Controllers.FileController, Zongsoft.Web" />
+		<object name="File" basePath="zfs.oss:/automao-data/" type="Zongsoft.Web.Controllers.FileController, Zongsoft.Web" />
 		<object name="Directory" type="Zongsoft.Web.Controllers.DirectoryController, Zongsoft.Web" />
 	</extension>
 
-	<!-- 挂载存储文件控制器 -->
+	<!--
 	<extension path="/Workspace/Controllers/Api/Storages">
 		<object name="File" bucket="{srv:StorageBucket}" file="{srv:StorageFile}" type="Zongsoft.Web.Plugins.Controllers.FileController, Zongsoft.Web.Plugins" />
 		<object name="Bucket" bucket="{srv:StorageBucket}" sequence="{srv:RedisSequence}" type="Zongsoft.Web.Plugins.Controllers.BucketController, Zongsoft.Web.Plugins" />
 	</extension>
+	-->
 
 	<!-- 挂载全局过滤器 -->
 	<extension path="/Workspace/Filters">
