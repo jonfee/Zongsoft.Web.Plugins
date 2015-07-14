@@ -79,7 +79,7 @@
 	<!-- 挂载文件目录系统控制器 -->
 	<extension path="/Workspace/Controllers/Api">
 		<object name="File" basePath="zfs.oss:/automao-data/" type="Zongsoft.Web.Controllers.FileController, Zongsoft.Web" />
-		<object name="Directory" type="Zongsoft.Web.Controllers.DirectoryController, Zongsoft.Web" />
+		<object name="Directory" basePath="zfs.oss:/automao-data/" type="Zongsoft.Web.Controllers.DirectoryController, Zongsoft.Web" />
 	</extension>
 
 	<!--
