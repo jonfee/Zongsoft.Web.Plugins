@@ -118,24 +118,24 @@ namespace Zongsoft.Web.Plugins.Builders
 			if(string.IsNullOrWhiteSpace(text))
 				return result;
 
-			string[] splits = text.Split(',');
+			var parts = text.Split(',');
 
-			foreach(string split in splits)
+			foreach(string part in parts)
 			{
-				int index = split.IndexOf('=');
+				int index = part.IndexOf('=');
 
 				if(index > 0)
 				{
-					string key = split.Substring(0, index).Trim();
+					string key = part.Substring(0, index).Trim();
 
 					if(!string.IsNullOrEmpty(key))
 					{
-						string valueText = split.Substring(index + 1);
+						string valueText = part.Substring(index + 1);
 
 						if(string.IsNullOrWhiteSpace(valueText))
 							result.Add(key, System.Web.Mvc.UrlParameter.Optional);
 						else
-							result.Add(key, builtin.ResolveValue(valueText));
+							result.Add(key, valueText);
 					}
 				}
 			}
