@@ -85,7 +85,7 @@
 	<!--
 	<extension path="/Workspace/Controllers/Api/Storages">
 		<object name="File" bucket="{srv:StorageBucket}" file="{srv:StorageFile}" type="Zongsoft.Web.Plugins.Controllers.FileController, Zongsoft.Web.Plugins" />
-		<object name="Bucket" bucket="{srv:StorageBucket}" sequence="{srv:RedisSequence}" type="Zongsoft.Web.Plugins.Controllers.BucketController, Zongsoft.Web.Plugins" />
+		<object name="Bucket" bucket="{srv:StorageBucket}" sequence="{srv:.}" type="Zongsoft.Web.Plugins.Controllers.BucketController, Zongsoft.Web.Plugins" />
 	</extension>
 	-->
 
