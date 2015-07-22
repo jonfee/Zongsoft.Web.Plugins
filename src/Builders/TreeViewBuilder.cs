@@ -46,7 +46,7 @@ namespace Zongsoft.Web.Plugins.Builders
 			{
 				ID = context.Builtin.Name,
 				CssClass = context.Builtin.Properties.GetValue<string>("cssClass"),
-				DataSource = context.Builtin.Properties.GetValue("dataSource"),
+				DataSource = context.Builtin.Properties.GetValue<object>("dataSource"),
 				IsDropdown = context.Builtin.Properties.GetValue<bool>("isDropdown"),
 				RenderMode = context.Builtin.Properties.GetValue<Zongsoft.Web.Controls.ListRenderMode>("renderMode", Zongsoft.Web.Controls.ListRenderMode.List),
 				Height = context.Builtin.Properties.GetValue<Zongsoft.Web.Controls.Unit>("height", Zongsoft.Web.Controls.Unit.Empty),
