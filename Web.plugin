@@ -91,7 +91,7 @@
 
 	<!-- 挂载全局过滤器 -->
 	<extension path="/Workspace/Filters">
-		<object name="AuthorizationFilter" type="Zongsoft.Web.Mvc.AuthorizationFilter, Zongsoft.Web" />
+		<object name="AuthorizationFilter" authorization="{srv:.@Security}" certificationProvider="{srv:.@Security}" type="Zongsoft.Web.Mvc.AuthorizationFilter, Zongsoft.Web" />
 		<object name="ValidateInputFilter" type="Zongsoft.Web.Mvc.ValidateInputFilter, Zongsoft.Web" method="POST, PUT" />
 	</extension>
 
