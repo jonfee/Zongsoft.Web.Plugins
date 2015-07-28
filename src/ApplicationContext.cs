@@ -39,13 +39,13 @@ namespace Zongsoft.Web.Plugins
 		public static readonly ApplicationContext Current = new ApplicationContext();
 		#endregion
 
+		#region 成员字段
+		private Zongsoft.Options.Configuration.OptionConfiguration _configuration;
+		#endregion
+
 		#region 私有构造
 		private ApplicationContext() : base("Zongsoft.Web.Plugins")
 		{
-			string filePaht = Path.Combine(this.ApplicationDirectory, "Web.option");
-
-			if(File.Exists(filePaht))
-				this.Configuration = Options.Configuration.OptionConfiguration.Load(filePaht);
 		}
 		#endregion
 
@@ -68,6 +68,24 @@ namespace Zongsoft.Web.Plugins
 			get
 			{
 				return HttpContext.Current.Server.MapPath("~");
+			}
+		}
+
+		public override Zongsoft.Options.Configuration.OptionConfiguration Configuration
+		{
+			get
+			{
+				if(_configuration == null)
+				{
+					string filePaht = Path.Combine(this.ApplicationDirectory, "Web.option");
+
+					if(File.Exists(filePaht))
+						_configuration = Options.Configuration.OptionConfiguration.Load(filePaht);
+					else
+						_configuration = new Options.Configuration.OptionConfiguration(filePaht);
+				}
+
+				return _configuration;
 			}
 		}
 
