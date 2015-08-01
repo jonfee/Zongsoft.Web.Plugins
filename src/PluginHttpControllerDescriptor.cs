@@ -33,7 +33,7 @@ using System.Web.Http.Controllers;
 
 using Zongsoft.Plugins;
 
-namespace Zongsoft.Web.Plugins.Http
+namespace Zongsoft.Web.Plugins
 {
 	public class PluginHttpControllerDescriptor : System.Web.Http.Controllers.HttpControllerDescriptor
 	{

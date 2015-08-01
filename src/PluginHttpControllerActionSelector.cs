@@ -30,9 +30,9 @@ using System.Web.Http;
 using System.Web.Http.Routing;
 using System.Web.Http.Controllers;
 
-namespace Zongsoft.Web.Plugins.Http
+namespace Zongsoft.Web.Plugins
 {
-	public class HttpControllerActionSelector : System.Web.Http.Controllers.ApiControllerActionSelector
+	public class PluginHttpControllerActionSelector : System.Web.Http.Controllers.ApiControllerActionSelector
 	{
 		public override HttpActionDescriptor SelectAction(HttpControllerContext controllerContext)
 		{

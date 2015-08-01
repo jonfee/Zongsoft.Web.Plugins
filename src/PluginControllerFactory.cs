@@ -35,7 +35,7 @@ using System.Web.Routing;
 
 using Zongsoft.Plugins;
 
-namespace Zongsoft.Web.Plugins.Mvc
+namespace Zongsoft.Web.Plugins
 {
 	public class PluginControllerFactory : IControllerFactory
 	{

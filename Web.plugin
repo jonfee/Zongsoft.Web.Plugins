@@ -91,7 +91,7 @@
 
 	<!-- 挂载全局过滤器 -->
 	<extension path="/Workspace/Filters">
-		<object name="ValidateInputFilter" type="Zongsoft.Web.Mvc.ValidateInputFilter, Zongsoft.Web" method="POST, PUT" />
+		<object name="InputValidationFilter" type="Zongsoft.Web.InputValidationFilter, Zongsoft.Web" method="POST, PUT" />
 	</extension>
 
 	<!-- 添加默认页面元素(主菜单、导航栏、站点映射) -->

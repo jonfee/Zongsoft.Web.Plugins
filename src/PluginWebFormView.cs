@@ -36,7 +36,7 @@ using System.Web.Compilation;
 
 using Zongsoft.Plugins;
 
-namespace Zongsoft.Web.Plugins.Mvc
+namespace Zongsoft.Web.Plugins
 {
 	public class PluginWebFormView : System.Web.Mvc.IView
 	{

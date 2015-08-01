@@ -35,7 +35,7 @@ using System.Web.Http.Routing;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.Controllers;
 
-namespace Zongsoft.Web.Plugins.Http
+namespace Zongsoft.Web.Plugins
 {
 	public class PluginHttpControllerSelector : IHttpControllerSelector
 	{

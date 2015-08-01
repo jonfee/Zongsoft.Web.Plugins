@@ -37,7 +37,7 @@ using System.Web.Routing;
 
 using Zongsoft.Plugins;
 
-namespace Zongsoft.Web.Plugins.Mvc
+namespace Zongsoft.Web.Plugins
 {
 	public abstract class PluginViewEngine : IViewEngine
 	{

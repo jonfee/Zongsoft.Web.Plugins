@@ -42,6 +42,7 @@ using Zongsoft.Common;
 
 namespace Zongsoft.Web.Plugins.Controllers
 {
+	[Obsolete]
 	public class FileController : ApiController
 	{
 		#region 成员字段

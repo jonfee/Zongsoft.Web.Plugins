@@ -33,7 +33,7 @@ using System.Web.Mvc;
 
 using Zongsoft.Plugins;
 
-namespace Zongsoft.Web.Plugins.Mvc
+namespace Zongsoft.Web.Plugins
 {
 	/// <summary>
 	/// 支持由插件注入的MVC过滤器提供程序。
