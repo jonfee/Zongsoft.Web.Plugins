@@ -36,7 +36,7 @@ namespace Zongsoft.Web.Plugins
 	public class ApplicationContext : Zongsoft.Plugins.PluginApplicationContext
 	{
 		#region 单例字段
-		public static readonly ApplicationContext Current = new ApplicationContext();
+		public new static readonly ApplicationContext Current = new ApplicationContext();
 		#endregion
 
 		#region 成员字段
@@ -46,6 +46,7 @@ namespace Zongsoft.Web.Plugins
 		#region 私有构造
 		private ApplicationContext() : base("Zongsoft.Web.Plugins")
 		{
+			Zongsoft.ComponentModel.ApplicationContextBase.Current = this;
 		}
 		#endregion
 
