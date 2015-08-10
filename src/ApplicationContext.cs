@@ -40,6 +40,7 @@ namespace Zongsoft.Web.Plugins
 		#endregion
 
 		#region 成员字段
+		private string _applicationDirectory;
 		private Zongsoft.Options.Configuration.OptionConfiguration _configuration;
 		#endregion
 
@@ -68,7 +69,10 @@ namespace Zongsoft.Web.Plugins
 		{
 			get
 			{
-				return HttpContext.Current.Server.MapPath("~");
+				if(string.IsNullOrEmpty(_applicationDirectory))
+					_applicationDirectory = HttpContext.Current.Server.MapPath("~");
+
+				return _applicationDirectory;
 			}
 		}
 
