@@ -63,7 +63,7 @@ namespace Zongsoft.Web.Plugins
 			var node = this.GetControllerNode(requestContext, controllerName);
 
 			if(node == null || node.NodeType == PluginTreeNodeType.Empty)
-				return null;
+				throw new HttpException(404, "Not found.");
 
 			var value = node.UnwrapValue(ObtainMode.Alway, this);
 
