@@ -155,17 +155,23 @@ namespace Zongsoft.Web.Plugins
 			string actionName = context.RouteData.GetRequiredString("action");
 			string areaName = context.RouteData.DataTokens["area"] as string;
 
+			//将控制器传入的验证错误信息转发给页面
 			foreach(var modelState in context.ViewData.ModelState)
 			{
 				if(modelState.Value.Errors.Count < 1)
 					continue;
 
-				var dic = ((ViewPage)page).Html.GetUnobtrusiveValidationAttributes(modelState.Key);
+				foreach(var error in modelState.Value.Errors)
+				{
+					page.ModelState.AddModelError(modelState.Key, error.ErrorMessage);
+				}
 
-				var control = this.FindControl(page, modelState.Key) as Zongsoft.Web.Controls.DataBoundControl;
+				//var dic = ((ViewPage)page).Html.GetUnobtrusiveValidationAttributes(modelState.Key);
 
-				if(control != null)
-					control.SetAttributeValue("data-validate-error", modelState.Value.Errors[0].ErrorMessage);
+				//var control = this.FindControl(page, modelState.Key) as Zongsoft.Web.Controls.DataBoundControl;
+
+				//if(control != null)
+				//	control.SetAttributeValue("data-validate-error", modelState.Value.Errors[0].ErrorMessage);
 			}
 
 			//生成主题相关的内容
@@ -223,9 +229,14 @@ namespace Zongsoft.Web.Plugins
 			if(control != null)
 				return control;
 
-			foreach(var child in container.Controls)
+			foreach(Control child in container.Controls)
 			{
 				control = this.FindControl(child as Control, id);
+
+				if(control != null)
+					return control;
+
+				control = this.FindControl(child, id);
 
 				if(control != null)
 					return control;
