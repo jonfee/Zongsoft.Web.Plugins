@@ -16,6 +16,14 @@
 		</assemblies>
 	</manifest>
 
+	<!-- 挂载Web文件系统 -->
+	<extension path="/Workbench/FileSystem">
+		<object name="WebFileSystem" value="{static:Zongsoft.Web.WebFileSystem.Instance, Zongsoft.Web}">
+			<!-- 将Web文件系统作为当前应用的默认文件系统 -->
+			<object.property name="Schema" type="Zongsoft.IO.FileSystem, Zongsoft.CoreLibrary" value="{path:.@Schema}" />
+		</object>
+	</extension>
+
 	<builders>
 		<!-- Web 路由 -->
 		<builder name="route" type="Zongsoft.Web.Plugins.Builders.RouteBuilder, Zongsoft.Web.Plugins" />
